@@ -39,4 +39,8 @@ class PagesController extends Controller
     public function thanks($name) {
         return view('pages.thankyou')->with(compact('name'));
     }
+
+    public function about() {
+        return view('pages.about');
+    }
 }
