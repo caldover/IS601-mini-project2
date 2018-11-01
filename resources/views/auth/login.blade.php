@@ -1,6 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('content')
+<h2>
+  Please Log In or Register in order to view the About and Contact pages
+</h2>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
