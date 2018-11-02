@@ -9,7 +9,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Creates a total of 50 users:
-        // 1 defined admin user for FeatureTest purposes
+        // 1 defined admin user for FeatureTest purposes (Need to log in before accessing Contact and About pages)
         // 49 randomly generated users
 
         // Create defined admin user
