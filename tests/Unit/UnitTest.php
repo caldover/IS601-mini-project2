@@ -4,9 +4,21 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
+//use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UnitTest extends TestCase
 {
+
+//    use DatabaseMigrations
+//    {
+//        runDatabaseMigrations as baseRunDatabaseMigrations;
+//    }
+//
+//    public function runDatabaseMigrations()
+//    {
+//        $this->baseRunDatabaseMigrations();
+//        $this->artisan('migrate:refresh --seed');
+//    }
 
     public function testInsertUser()
     {
@@ -81,5 +93,19 @@ class UnitTest extends TestCase
 
         // Check if initial count of users is equal to the new count
         $this->assertSame($initialCount, $newCount);
+    }
+
+    public function testUsersTableSeeder()
+    {
+        // Clear current database and re-seed
+        $this->artisan('migrate:refresh');
+        $this->artisan('db:seed');
+
+        // Get the count of users in the users table
+        $users = DB::table('users')->get()->toArray();
+        $userCount = count($users);
+
+        // Check if the count of users is equal to 50
+        $this->assertSame($userCount, 50);
     }
 }
