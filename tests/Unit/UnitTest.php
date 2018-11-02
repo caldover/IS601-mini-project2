@@ -4,21 +4,9 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-//use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UnitTest extends TestCase
 {
-
-//    use DatabaseMigrations
-//    {
-//        runDatabaseMigrations as baseRunDatabaseMigrations;
-//    }
-//
-//    public function runDatabaseMigrations()
-//    {
-//        $this->baseRunDatabaseMigrations();
-//        $this->artisan('migrate:refresh --seed');
-//    }
 
     public function testInsertUser()
     {
@@ -107,5 +95,29 @@ class UnitTest extends TestCase
 
         // Check if the count of users is equal to 50
         $this->assertSame($userCount, 50);
+    }
+
+    public function testInsertCar()
+    {
+        // Get the initial count of users in the cars table
+        $initialCars = DB::table('cars')->get()->toArray();
+        $initialCount = count($initialCars);
+
+        // Create and insert new car
+        DB::table('cars')->insert([
+            'make' => 'TestMake',
+            'model' => 'TestModel',
+            'year' => 2018
+        ]);
+
+        // Get the new count of cars in the cars table
+        $newCars = DB::table('cars')->get()->toArray();
+        $newCount = count($newCars);
+
+        // Check if initial count of cars + 1 is equal to the new count
+        $this->assertSame($initialCount + 1, $newCount);
+
+        // Remove the car from the cars table
+        DB::table('cars')->where('make', 'TestMake')->delete();
     }
 }
