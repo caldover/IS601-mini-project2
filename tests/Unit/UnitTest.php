@@ -35,4 +35,23 @@ class UnitTest extends TestCase
         // Remove the user from the users table
         DB::table('users')->where('email', 'test@email.com')->delete();
     }
+
+    public function testUpdateUser()
+    {
+        // Select any user with IDs from 2 to 50 (ID #1 is reserved for admin user)
+        $randomID = rand(2, 50);
+
+        // Get the user, save its original name, and update its name to Steve Smith
+        $randomUser = DB::table('users')->where('id', $randomID);
+        $initialName = $randomUser->get()[0]->name;
+        $randomUser->update(['name' => 'Steve Smith']);
+
+        // Check to see if the randomly selected user's name was updated to Steve Smith
+        $updatedUsers = DB::table('users')->where('name', '=', 'Steve Smith')->get();
+        $updatedUser = $updatedUsers[0];
+        $this->assertSame($updatedUser->name, 'Steve Smith');
+
+        // Change the user's name back to its original name
+        $randomUser->update(['name' => $initialName]);
+    }
 }
