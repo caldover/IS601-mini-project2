@@ -178,4 +178,10 @@ class UnitTest extends TestCase
         // Check if the count of cars is equal to 50
         $this->assertSame($carCount, 50);
     }
+
+    public function testCarYearType()
+    {
+        $car = Car::inRandomOrder()->first();
+        $this->assertInternalType('int', $car->year);
+    }
 }
