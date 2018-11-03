@@ -184,4 +184,21 @@ class UnitTest extends TestCase
         $car = Car::inRandomOrder()->first();
         $this->assertInternalType('int', $car->year);
     }
+
+    public function testCarMake()
+    {
+        // Select any user with IDs from 1 to 50
+        $randomID = rand(1, 50);
+
+        // Get the randomly selected car's make
+        $randomCar = DB::table('cars')->where('id', $randomID);
+        $make = $randomCar->get()[0]->make;
+
+        // Check if the make is either Ford, Honda, or Toyota
+        $isValid = false;
+        if($make == 'Ford' || $make == 'Honda' || $make == 'Toyota') {
+            $isValid = true;
+        }
+        $this->assertTrue($isValid);
+    }
 }
