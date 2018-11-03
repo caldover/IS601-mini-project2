@@ -129,7 +129,7 @@ class UnitTest extends TestCase
 
         // Get the car, save its original year, and update its year to 2000
         $randomCar = DB::table('cars')->where('id', $randomID);
-        $initialYear = $randomCar->get()[0]->year;
+        $initialYear = (int)$randomCar->get()[0]->year;
         $randomCar->update(['year' => 2000]);
 
         // Check to see if the randomly selected car's year was updated to 2000
@@ -163,5 +163,19 @@ class UnitTest extends TestCase
 
         // Check if initial count of cars is equal to the new count
         $this->assertSame($initialCount, $newCount);
+    }
+
+    public function testCarsTableSeeder()
+    {
+        // Clear current database and re-seed
+        $this->artisan('migrate:refresh');
+        $this->artisan('db:seed');
+
+        // Get the count of cars in the cars table
+        $cars = DB::table('cars')->get()->toArray();
+        $carCount = count($cars);
+
+        // Check if the count of cars is equal to 50
+        $this->assertSame($carCount, 50);
     }
 }
