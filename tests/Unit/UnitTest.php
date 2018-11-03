@@ -140,4 +140,28 @@ class UnitTest extends TestCase
         // Change the car's year back to its original year
         $randomCar->update(['year' => $initialYear]);
     }
+
+    public function testDeleteCar()
+    {
+        // Get the initial count of users in the cars table
+        $initialCars = DB::table('cars')->get()->toArray();
+        $initialCount = count($initialCars);
+
+        // Create and insert new car
+        DB::table('cars')->insert([
+            'make' => 'TestMake',
+            'model' => 'TestModel',
+            'year' => 2018
+        ]);
+
+        // Remove the car from the cars table
+        DB::table('cars')->where('make', 'TestMake')->delete();
+
+        // Get the new count of cars in the cars table
+        $newCars = DB::table('cars')->get()->toArray();
+        $newCount = count($newCars);
+
+        // Check if initial count of cars is equal to the new count
+        $this->assertSame($initialCount, $newCount);
+    }
 }
