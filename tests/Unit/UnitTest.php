@@ -201,4 +201,10 @@ class UnitTest extends TestCase
         }
         $this->assertTrue($isValid);
     }
+
+    public function testCarModelType()
+    {
+        $car = Car::inRandomOrder()->first();
+        $this->assertInternalType('string', $car->model);
+    }
 }

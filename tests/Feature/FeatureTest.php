@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -28,8 +29,8 @@ class FeatureTest extends TestCase
     {
         // Login with defined admin user from UsersTableSeeder
         // If you don't log in then we will get 302 status instead due to redirect back to login page
-        $credentials = ['email'=>'admin@email.com', 'password'=>'secret'];
-        $this->call('POST', '/login', $credentials);
+        $user = User::find(1);
+        $this->ActingAs($user);
 
         $response = $this->get('/about');
         $response->assertStatus(200);
@@ -39,8 +40,8 @@ class FeatureTest extends TestCase
     {
         // Login with defined admin user from UsersTableSeeder
         // If you don't log in then we will get 302 status instead due to redirect back to login page
-        $credentials = ['email'=>'admin@email.com', 'password'=>'secret'];
-        $this->call('POST', '/login', $credentials);
+        $user = User::find(1);
+        $this->ActingAs($user);
 
         $response = $this->get('/contact');
         $response->assertStatus(200);
